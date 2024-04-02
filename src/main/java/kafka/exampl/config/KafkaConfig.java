@@ -2,6 +2,7 @@ package kafka.exampl.config;
 
 import com.esotericsoftware.yamlbeans.YamlReader;
 import com.jcabi.xml.XML;
+import kafka.exampl.Main;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.apache.kafka.clients.admin.NewTopic;
@@ -18,6 +19,7 @@ import reactor.kafka.sender.SenderOptions;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
@@ -87,8 +89,7 @@ public class KafkaConfig {
     @Bean
     public SenderOptions<String, Object> senderOptionsYaml() throws FileNotFoundException {
         Map<String,Object> data = new Yaml().load(
-//                new FileInputStream("C:\\Project\\work\\testingJunitMock\\data-generator-microservise-kafka\\src\\main\\resources\\kafka\\kafka-config.yaml"));
-                getClass().getResourceAsStream("/kafka/kafka-config.yaml").toString());
+                Main.class.getClassLoader().getResourceAsStream("kafka/kafka-config.yaml"));
                 Properties properties = new Properties();
         properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
                 servers);
